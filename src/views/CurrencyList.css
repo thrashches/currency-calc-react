@@ -1,0 +1,12 @@
+.wrapper {
+    display: flex;
+}
+
+.table {
+    font-size: 18px;
+    text-align: left;
+}
+
+.table tr {
+    border: 1px white solid;
+}
