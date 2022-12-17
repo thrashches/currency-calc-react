@@ -1,4 +1,7 @@
 import React from "react";
+import Autocomplete from "@mui/material/Autocomplete";
+import TextField from "@mui/material/TextField";
+import Typography from "@mui/material/Typography";
 import { convert } from "../utils/converter";
 import "./CurrencyCalc.css";
 
@@ -10,6 +13,8 @@ class CurrencyCalc extends React.Component {
       currencies: {},
     };
     this.handleInputChange = this.handleInputChange.bind(this);
+    this.handleCurrencyFromChange = this.handleCurrencyFromChange.bind(this);
+    this.handleCurrencyToChange = this.handleCurrencyToChange.bind(this);
   }
 
   componentDidMount() {
@@ -19,20 +24,57 @@ class CurrencyCalc extends React.Component {
         return response.json();
       })
       .then((data) => {
+        const currencies = data.Valute;
+        currencies.RUB = {
+          Nominal: 1,
+          Value: 1,
+          Name: 'Российский рубль'
+        }
+        
         this.setState({
-          from: 1,
-          to: 0,
+          currencyFrom: this.state.currencyFrom ?? "USD",
+          currencyTo: this.state.currencyTo ?? "RUB",
           loading: false,
-          currencies: data.Valute,
+          currencies: currencies,
         });
       });
   }
 
   handleInputChange(event) {
-    console.log(event.target.value);
     this.setState((prevState) => ({
       from: parseInt(event.target.value),
-      to: convert(event.target.value, "USD", "RUB", this.state.currencies),
+      to: convert(
+        parseInt(event.target.value),
+        this.state.currencyFrom,
+        this.state.currencyTo,
+        this.state.currencies
+      ),
+    }));
+  }
+
+  handleCurrencyFromChange(event, value) {
+    this.setState((prevState) => ({
+      currencyFrom: value,
+      from: this.state.from,
+      to: convert(
+        this.state.from,
+        value,
+        this.state.currencyTo,
+        this.state.currencies
+      ),
+    }));
+  }
+
+  handleCurrencyToChange(event, value) {
+    this.setState((prevState) => ({
+      currencyTo: value,
+      from: this.state.from,
+      to: convert(
+        this.state.from,
+        this.state.currencyFrom,
+        value,
+        this.state.currencies
+      ),
     }));
   }
 
@@ -41,23 +83,47 @@ class CurrencyCalc extends React.Component {
       return <h1>Loading</h1>;
     }
     const result = this.state.to || 0;
+    const options = Object.keys(this.state.currencies).map((key) => {
+      return key;
+    });
+    if (!options.includes("RUB")) {
+      options.push("RUB");
+    }
+
     return (
       <div className="calc-wrapper">
         <div className="col">
-          <div className="col__header">USD</div>
+          <div className="col__header">
+            <Autocomplete
+              options={options}
+              value={this.state.currencyFrom}
+              disableClearable={true}
+              onChange={this.handleCurrencyFromChange}
+              renderInput={(params) => <TextField {...params} label="Валюта" />}
+            />
+          </div>
           <div className="col__footer">
-            <input
+            <TextField
               type="number"
               placeholder="0.00"
-              className="currency__input"
               onChange={this.handleInputChange}
-            ></input>
+              fullWidth={true}
+            />
           </div>
         </div>
         <div className="col">
-          <div className="col__header">RUB</div>
+          <div className="col__header">
+            <Autocomplete
+              options={options}
+              value={this.state.currencyTo}
+              disableClearable={true}
+              onChange={this.handleCurrencyToChange}
+              renderInput={(params) => <TextField {...params} label="Валюта" />}
+            />
+          </div>
           <div className="col__footer">
-            <p>{result}</p>
+            <Typography variant="body1" align="center">{result}</Typography>
+
           </div>
         </div>
       </div>

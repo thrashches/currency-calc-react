@@ -1,5 +1,11 @@
 import React from "react";
 import "./CurrencyList.css";
+import Table from "@mui/material/Table";
+import TableBody from "@mui/material/TableBody";
+import TableCell from "@mui/material/TableCell";
+import TableRow from "@mui/material/TableRow";
+import TableContainer from "@mui/material/TableContainer";
+import Paper from "@mui/material/Paper";
 
 class CurrencyList extends React.Component {
   constructor(props) {
@@ -17,7 +23,6 @@ class CurrencyList extends React.Component {
         return response.json();
       })
       .then((data) => {
-        console.log(data);
         this.setState({
           loading: false,
           currencies: data.Valute,
@@ -31,17 +36,21 @@ class CurrencyList extends React.Component {
     }
     const listItems = Object.keys(this.state.currencies).map((key) => {
       return (
-        <tr>
-          <td>{key}</td>
-          <td>{this.state.currencies[key].Name}</td>
-          <td>{this.state.currencies[key].Value}</td>
-        </tr>
+        <TableRow key={key}>
+          <TableCell>{key}</TableCell>
+          <TableCell>{this.state.currencies[key].Name}</TableCell>
+          <TableCell>{this.state.currencies[key].Value}</TableCell>
+        </TableRow>
       );
     });
     return (
-      <table className="table">
-        <tbody>{listItems}</tbody>
-      </table>
+      <TableContainer component={Paper} sx={{maxWidth: 650}}>
+        <Table sx={{ maxWidth: 650 }}>
+          <TableBody>
+            {listItems}
+          </TableBody>
+        </Table>
+      </TableContainer>
     );
   }
 }
