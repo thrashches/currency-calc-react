@@ -28,9 +28,9 @@ class CurrencyCalc extends React.Component {
         currencies.RUB = {
           Nominal: 1,
           Value: 1,
-          Name: 'Российский рубль'
-        }
-        
+          Name: "Российский рубль",
+        };
+
         this.setState({
           currencyFrom: this.state.currencyFrom ?? "USD",
           currencyTo: this.state.currencyTo ?? "RUB",
@@ -122,8 +122,9 @@ class CurrencyCalc extends React.Component {
             />
           </div>
           <div className="col__footer">
-            <Typography variant="body1" align="center">{result}</Typography>
-
+            <Typography variant="body1" align="center">
+              {result}
+            </Typography>
           </div>
         </div>
       </div>

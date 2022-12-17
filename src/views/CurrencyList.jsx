@@ -44,11 +44,9 @@ class CurrencyList extends React.Component {
       );
     });
     return (
-      <TableContainer component={Paper} sx={{maxWidth: 650}}>
+      <TableContainer component={Paper} sx={{ maxWidth: 650 }}>
         <Table sx={{ maxWidth: 650 }}>
-          <TableBody>
-            {listItems}
-          </TableBody>
+          <TableBody>{listItems}</TableBody>
         </Table>
       </TableContainer>
     );

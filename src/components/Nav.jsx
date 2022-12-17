@@ -4,7 +4,6 @@ import Tab from "@mui/material/Tab";
 
 import { Link, useLocation, matchPath } from "react-router-dom";
 
-
 function useRouteMatch(patterns) {
   const { pathname } = useLocation();
 
@@ -19,16 +18,19 @@ function useRouteMatch(patterns) {
   return null;
 }
 
-
 export default function Navbar() {
-    const routeMatch = useRouteMatch(["/", "currencies/"]);
-    const currentTab = routeMatch?.pattern?.path;
-
+  const routeMatch = useRouteMatch(["/", "currencies/"]);
+  const currentTab = routeMatch?.pattern?.path;
 
   return (
     <Tabs value={currentTab}>
       <Tab label="Конвертер валют" value="/" component={Link} to="/" />
-      <Tab label="Курсы валют" value="currencies/" component={Link} to="currencies/" />
+      <Tab
+        label="Курсы валют"
+        value="currencies/"
+        component={Link}
+        to="currencies/"
+      />
     </Tabs>
   );
 }

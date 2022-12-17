@@ -1,5 +1,5 @@
 function convert(value, currencyFrom, currencyTo, rates) {
-  const result = 
+  const result =
     Math.round(
       ((value * rates[currencyFrom].Value) /
         rates[currencyFrom].Nominal /
