@@ -99,7 +99,9 @@ class CurrencyCalc extends React.Component {
               value={this.state.currencyFrom}
               disableClearable={true}
               onChange={this.handleCurrencyFromChange}
-              renderInput={(params) => <TextField {...params} label="Валюта" />}
+              renderInput={(params) => (
+                <TextField {...params} label="Конвертировать из" />
+              )}
             />
           </div>
           <div className="col__footer">
@@ -118,7 +120,9 @@ class CurrencyCalc extends React.Component {
               value={this.state.currencyTo}
               disableClearable={true}
               onChange={this.handleCurrencyToChange}
-              renderInput={(params) => <TextField {...params} label="Валюта" />}
+              renderInput={(params) => (
+                <TextField {...params} label="Конвертировать в" />
+              )}
             />
           </div>
           <div className="col__footer">

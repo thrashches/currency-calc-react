@@ -20,7 +20,7 @@ function App() {
         <header>
           <Navbar />
         </header>
-        <main className="App-header">
+        <main className="App-main">
           <Routes>
             <Route path="/" element={<CurrencyCalc />} />
             <Route path="currencies/" element={<CurrencyList />} />
